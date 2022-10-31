@@ -47,17 +47,47 @@ public class Plane
     public void Print()
     {
         for (int i = 0; i < field.GetLength(0); i++)
-        for (int j = 0; j < field.GetLength(0); j++)
         {
-            if (flags[i, j])
+            for (int j = 0; j < field.GetLength(0); j++)
             {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.Write("F");
+                if (flags[i, j])
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.Write("F");
+                }
+                else if (cracked[i, j])
+                {
+                    Console.ForegroundColor = colors[field[i, j]];
+                    Console.Write(field[i,j]);
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                    Console.Write("#");
+                }
             }
-            else
+            Console.WriteLine();
+        }
+    }
+
+    public void PrintDeath()
+    {
+        for (int i = 0; i < field.GetLength(0); i++)
+        {
+            for (int j = 0; j < field.GetLength(0); j++)
             {
-                Console.ForegroundColor = colors[field[i, j]]; 
+                if (field[i, j] == 10)
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    Console.Write("¤");
+                }
+                else
+                {
+                    Console.ForegroundColor = colors[field[i, j]];
+                    Console.Write(field[i,j]);
+                }
             }
+            Console.WriteLine();
         }
     }
 }
