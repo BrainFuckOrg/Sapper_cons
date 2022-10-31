@@ -17,8 +17,9 @@ public class GameLoop
     private static Boolean Move(Plane plane)
     {
         Console.WriteLine("0 - make move\n1 - place flag");
+        String bufer = Console.ReadLine();
         Byte[] stepPosition = ScanStepPosition();
-        return Console.ReadLine() switch
+        return bufer switch
         {
             "0" => plane.Step(stepPosition[0], stepPosition[1]),
             "1" => plane.PlaceFlag(stepPosition[0], stepPosition[1]),
