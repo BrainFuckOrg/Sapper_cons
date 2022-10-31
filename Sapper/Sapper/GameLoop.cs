@@ -29,6 +29,7 @@ public class GameLoop
     
     public static Boolean Loop(Plane plane)
     {
+        PrintGameInfo(plane);
         if (!Move(plane))
         {
             plane.PrintDeath();
@@ -39,5 +40,10 @@ public class GameLoop
         Console.WriteLine("Congratulation");
         return false;
 
+    }
+
+    private static void PrintGameInfo(Plane plane)
+    {
+        Console.WriteLine("Bomb number: {0}  Flag left: {1}",plane.bombNumber,plane.placedflags);
     }
 }
