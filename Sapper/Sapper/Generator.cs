@@ -23,7 +23,6 @@ public class Generator
         Random random = new Random();
         for (UInt16 i = 0; i < BombNumber; i++)
         {
-            Console.WriteLine(i);
             Byte rowNum;
             Byte colNum;
             do
