@@ -56,7 +56,7 @@ public class Plane
             }
             else
             {
-                Console.ForegroundColor = colors[field[i, j]];
+                Console.ForegroundColor = colors[field[i, j]]; 
             }
         }
     }
