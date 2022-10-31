@@ -38,9 +38,9 @@ public class Plane
     public Boolean CheckEnd()
     {
         bool result = true;
-        foreach (bool b in cracked)
-        foreach (bool b2 in flags)
-            result &= b || b2;
+        for(int i=0; i<field.GetLength(0);i++)
+        for (int j = 0; j < field.GetLength(0); j++)
+            result &= cracked[i, j] || flags[i, j];
         return result;
     }
 
