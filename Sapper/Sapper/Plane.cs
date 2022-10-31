@@ -2,19 +2,21 @@ namespace Sapper;
 
 public class Plane
 {
+    private ConsoleColor[] colors = { ConsoleColor.DarkBlue, ConsoleColor.Blue,ConsoleColor.Cyan,ConsoleColor.DarkCyan,ConsoleColor.DarkGreen,ConsoleColor.Yellow,ConsoleColor.Red,ConsoleColor.DarkRed,ConsoleColor.Magenta};
     private byte[,] field;
     private bool[,] cracked;
     private bool[,] flags;
     public UInt16 bombNumber { get; private set; }
     public UInt16 placedflags { get; private set; }
+
     public Plane(byte[,] Field, UInt16 BombNumber)
     {
         field = Field;
         bombNumber = BombNumber;
         placedflags = 0;
-        cracked = new bool[field.Length, field.Length];
+        cracked = new bool[field.GetLength(0),field.GetLength(0)];
         flags = new bool[field.Length, field.Length];
-        for (int i = 0; i < field.Length; i++)for (int j = 0; j < field.Length; j++)cracked[i, j] = flags[i, j] = false;
+        for (int i = 0; i < field.GetLength(0); i++)for (int j = 0; j < field.GetLength(0); j++)cracked[i, j] = flags[i, j] = false;
     }
 
     public bool Step(byte x, byte y)//true - nice, false - ur ded
@@ -33,8 +35,29 @@ public class Plane
         return flags[x, y] = true;
     }
 
-    //public Boolean CheckEnd()
-    //{
-    //    for(int )
-    //}
+    public Boolean CheckEnd()
+    {
+        bool result = true;
+        foreach (bool b in cracked)
+        foreach (bool b2 in flags)
+            result &= b || b2;
+        return result;
+    }
+
+    public void Print()
+    {
+        for (int i = 0; i < field.GetLength(0); i++)
+        for (int j = 0; j < field.GetLength(0); j++)
+        {
+            if (flags[i, j])
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.Write("F");
+            }
+            else
+            {
+                Console.ForegroundColor = colors[field[i, j]];
+            }
+        }
+    }
 }
