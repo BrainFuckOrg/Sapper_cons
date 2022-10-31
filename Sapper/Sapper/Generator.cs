@@ -4,30 +4,31 @@ using System;
 public class Generator
 {
     private const Single Percent = 0.2f;
-    private static Byte[,] _plane;
-    private const Byte BombNumber_InTable = 10;
-    private static UInt16 BombNumber(Int32 size)
-    {
-        return (UInt16)(size * size * Percent);
-    }
+    private static Byte[,] _plane = null!;
+    private const Byte BombNumberInTable = 10;
+
+    private static Int32 ArrLength => _plane.GetLength(0);
+
+    private static UInt16 BombNumber => (UInt16)(ArrLength * ArrLength * Percent);
+    
     public static Plane GeneratePlane(Byte size)
     {
         _plane = new Byte[size, size];
         SetBombs();
-        return new Plane(_plane,BombNumber(_plane.Length));
+        return new Plane(_plane,BombNumber);
     }
 
     private static void SetBombs()
     {
         Random random = new Random();
-        for (UInt16 i = 0; i < BombNumber(_plane.Length); i++)
+        for (UInt16 i = 0; i < BombNumber; i++)
         {
             Byte rowNum;
             Byte colNum;
             do
             {
-                rowNum = (Byte)random.Next(_plane.Length);
-                colNum = (Byte)random.Next(_plane.Length);
+                rowNum = (Byte)random.Next(ArrLength);
+                colNum = (Byte)random.Next(ArrLength);
             } while (CanSetBombTo(rowNum, colNum));
 
             SetBombTo(rowNum, colNum);
@@ -36,12 +37,12 @@ public class Generator
 
     private static void SetBombTo(Byte rowNum, Byte colNum)
     {
-        _plane[rowNum, colNum] = BombNumber_InTable;
+        _plane[rowNum, colNum] = BombNumberInTable;
         for (Int16 i = -1; i <= 1; i++)
         {
             for (Int16 j = -1; j <= 1; j++)
             {
-                if (_plane[rowNum+i,colNum+j]==BombNumber_InTable) continue;
+                if (_plane[rowNum+i,colNum+j]==BombNumberInTable) continue;
                 _plane[rowNum + i, colNum + j]++;
             }
         }
@@ -49,16 +50,16 @@ public class Generator
 
     private static Boolean CanSetBombTo(Byte rowNum, Byte colNum)
     {
-        if (rowNum >= _plane.Length || colNum >= _plane.Length)
+        if (rowNum >= ArrLength || colNum >= ArrLength)
             return false;
-        if (_plane[rowNum, colNum] == BombNumber_InTable)
+        if (_plane[rowNum, colNum] == BombNumberInTable)
             return false;
         for (Int16 i = -1; i <= 1; i++)
         {
             for (Int16 j = -1; j <= 1; j++)
             {
-                if (rowNum + i >= _plane.Length || colNum + j >= _plane.Length) continue;
-                if (_plane[rowNum + i, colNum + j]!=BombNumber_InTable) return true;
+                if (rowNum + i >= ArrLength || colNum + j >= ArrLength) continue;
+                if (_plane[rowNum + i, colNum + j]!=BombNumberInTable) return true;
             }
         }
 
