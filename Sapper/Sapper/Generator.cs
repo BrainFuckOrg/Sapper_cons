@@ -23,13 +23,14 @@ public class Generator
         Random random = new Random();
         for (UInt16 i = 0; i < BombNumber; i++)
         {
+            Console.WriteLine(i);
             Byte rowNum;
             Byte colNum;
             do
             {
                 rowNum = (Byte)random.Next(ArrLength);
                 colNum = (Byte)random.Next(ArrLength);
-            } while (CanSetBombTo(rowNum, colNum));
+            } while (!CanSetBombTo(rowNum, colNum));
 
             SetBombTo(rowNum, colNum);
         }
@@ -42,7 +43,7 @@ public class Generator
         {
             for (Int16 j = -1; j <= 1; j++)
             {
-                if (_plane[rowNum+i,colNum+j]==BombNumberInTable) continue;
+                if ( rowNum + i >= ArrLength || colNum + j >= ArrLength || rowNum + i < 0 || colNum + j < 0 || _plane[rowNum+i,colNum+j]==BombNumberInTable) continue;
                 _plane[rowNum + i, colNum + j]++;
             }
         }
@@ -58,7 +59,7 @@ public class Generator
         {
             for (Int16 j = -1; j <= 1; j++)
             {
-                if (rowNum + i >= ArrLength || colNum + j >= ArrLength) continue;
+                if (rowNum + i >= ArrLength || colNum + j >= ArrLength || rowNum + i < 0 || colNum + j < 0) continue;
                 if (_plane[rowNum + i, colNum + j]!=BombNumberInTable) return true;
             }
         }
