@@ -13,7 +13,8 @@ public class Generator
     public static Plane GeneratePlane(Byte size)
     {
         _plane = new Byte[size, size];
-        Generation(plane);
+        SetBombs();
+        return new Plane(_plane,BombNumber(_plane.Length));
     }
 
     private static void SetBombs()
@@ -35,22 +36,32 @@ public class Generator
 
     private static void SetBombTo(Byte rowNum, Byte colNum)
     {
-        throw new NotImplementedException();
-    }
-
-    private static Boolean CanSetBombTo(Byte rowNum, Byte colNum)
-    {
-        if (rowNum >= _plane.Length || colNum >= _plane.Length) return false;
-        if(_plane[rowNum,colNum]==BombNumber_InTable) 
+        _plane[rowNum, colNum] = BombNumber_InTable;
         for (Int16 i = -1; i <= 1; i++)
         {
             for (Int16 j = -1; j <= 1; j++)
             {
-                if (rowNum + i < _plane.Length && colNum + j < _plane.Length)
-                {
-                    if (_plane[rowNum + i, colNum + j]) return true;
-                }
+                if (_plane[rowNum+i,colNum+j]==BombNumber_InTable) continue;
+                _plane[rowNum + i, colNum + j]++;
             }
         }
+    }
+
+    private static Boolean CanSetBombTo(Byte rowNum, Byte colNum)
+    {
+        if (rowNum >= _plane.Length || colNum >= _plane.Length)
+            return false;
+        if (_plane[rowNum, colNum] == BombNumber_InTable)
+            return false;
+        for (Int16 i = -1; i <= 1; i++)
+        {
+            for (Int16 j = -1; j <= 1; j++)
+            {
+                if (rowNum + i >= _plane.Length || colNum + j >= _plane.Length) continue;
+                if (_plane[rowNum + i, colNum + j]!=BombNumber_InTable) return true;
+            }
+        }
+
+        return false;
     }
 }
