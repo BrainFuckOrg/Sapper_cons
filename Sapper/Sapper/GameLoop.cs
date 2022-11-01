@@ -44,6 +44,6 @@ public class GameLoop
 
     private static void PrintGameInfo(Plane plane)
     {
-        Console.WriteLine("Bomb number: {0}  Flag left: {1}",plane.bombNumber, plane.bombNumber - plane.placedflags);
+        Console.WriteLine("Bomb number: {0}  Flag left: {1}",plane.BombNumber,plane.Placedflags);
     }
 }
