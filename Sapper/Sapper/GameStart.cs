@@ -2,10 +2,6 @@ namespace Sapper;
 
 public class GameStart
 {
-    private static void ScanSizeOfField()
-    {
-        
-    }
     public static void StartSapper()
     {
         Console.Write("Enter the plane size: ");
