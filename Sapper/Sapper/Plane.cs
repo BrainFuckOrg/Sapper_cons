@@ -68,6 +68,8 @@ public class Plane
             }
             Console.WriteLine();
         }
+
+        Console.ForegroundColor = ConsoleColor.White;
     }
 
     public void PrintDeath()
