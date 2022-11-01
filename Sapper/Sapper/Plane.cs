@@ -23,6 +23,16 @@ public class Plane
     {
         if (_field[x,y] == 10) return false;
         _cracked[x,y] = true;
+        if(_field[x,y]==0)
+            for (Int16 i = -1; i <= 1; i++)
+            {
+                for (Int16 j = -1; j <= 1; j++)
+                {
+                    //Console.WriteLine(x+i + " " + y+);
+                    if (x + i >= _field.GetLength(0) || y + j >= _field.GetLength(0) || x + i < 0 || y + j < 0 || _cracked[x+i,y+j]) continue;
+                    Step((Byte)(x+i),(Byte)(y+j));
+                }
+            }
         if (_flags[x, y]) Placedflags--;
         _flags[x, y] = false;
         return true;
