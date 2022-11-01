@@ -15,7 +15,7 @@ public class Plane
         this.BombNumber = bombNumber;
         Placedflags = 0;
         _cracked = new bool[this._field.GetLength(0),this._field.GetLength(0)];
-        _flags = new bool[this._field.Length, this._field.Length];
+        _flags = new bool[this._field.GetLength(0), this._field.GetLength(0)];
         for (int i = 0; i < this._field.GetLength(0); i++)for (int j = 0; j < this._field.GetLength(0); j++)_cracked[i, j] = _flags[i, j] = false;
     }
 
@@ -24,15 +24,7 @@ public class Plane
         if (_field[x,y] == 10) return false;
         _cracked[x,y] = true;
         if(_field[x,y]==0)
-            for (Int16 i = -1; i <= 1; i++)
-            {
-                for (Int16 j = -1; j <= 1; j++)
-                {
-                    //Console.WriteLine(x+i + " " + y+);
-                    if (x + i >= _field.GetLength(0) || y + j >= _field.GetLength(0) || x + i < 0 || y + j < 0 || _cracked[x+i,y+j]) continue;
-                    Step((Byte)(x+i),(Byte)(y+j));
-                }
-            }
+            ZeroDestruction(x,y);
         if (_flags[x, y]) Placedflags--;
         _flags[x, y] = false;
         return true;
@@ -75,6 +67,7 @@ public class Plane
                     Console.ForegroundColor = ConsoleColor.Gray;
                     Console.Write("#");
                 }
+                Console.Write(" ");
             }
             Console.WriteLine();
         }
@@ -82,6 +75,17 @@ public class Plane
         Console.ForegroundColor = ConsoleColor.White;
     }
 
+    private void ZeroDestruction(byte x,byte y)
+    {
+        for (Int16 i = -1; i <= 1; i++)
+        {
+            for (Int16 j = -1; j <= 1; j++)
+            {
+                if (x + i >= _field.GetLength(0) || y + j >= _field.GetLength(0) || x + i < 0 || y + j < 0 || _cracked[x+i,y+j]) continue;
+                Step((Byte)(x+i),(Byte)(y+j));
+            }
+        }
+    }
     public void PrintDeath()
     {
         for (int i = 0; i < _field.GetLength(0); i++)
@@ -98,6 +102,7 @@ public class Plane
                     Console.ForegroundColor = _colors[_field[i, j]];
                     Console.Write(_field[i,j]);
                 }
+                Console.Write(" ");
             }
             Console.WriteLine();
         }
