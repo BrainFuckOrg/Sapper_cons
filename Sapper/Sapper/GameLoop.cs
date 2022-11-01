@@ -37,6 +37,7 @@ public class GameLoop
         }
 
         if (!plane.CheckEnd()) return true;
+        plane.Print();
         Console.WriteLine("Congratulation");
         return false;
 
